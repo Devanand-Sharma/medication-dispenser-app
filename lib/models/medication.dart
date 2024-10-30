@@ -5,24 +5,24 @@ import 'package:medication_app/models/prescription.dart';
 class Medication {
   Medication({
     required this.id,
-    required this.name,
-    required this.condition,
-    required this.route,
-    required this.dose,
-    required this.prescription,
-    required this.dosage,
+    this.name,
+    this.condition,
+    this.route,
+    this.dose,
+    this.prescription,
+    this.dosage,
     this.instructions,
     this.image,
     this.color,
   });
 
   String id;
-  String name;
-  String condition;
-  MedicationRoute route;
-  int dose;
-  Dosage dosage;
-  Prescription prescription;
+  String? name;
+  String? condition;
+  MedicationRoute? route;
+  int? dose;
+  Dosage? dosage;
+  Prescription? prescription;
   String? instructions;
 
   String? image;

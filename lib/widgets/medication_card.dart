@@ -29,14 +29,14 @@ class MedicationCard extends StatelessWidget {
                 Icons.medication_rounded,
                 size: 40,
               ),
-              title: Text(medication.name),
+              title: Text(medication.name!),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(medication.condition,
+                  Text(medication.condition!,
                       style: Theme.of(context).textTheme.bodySmall),
                   Text(
-                      'x${medication.prescription.remainingQuantity.toString()}',
+                      'x${medication.prescription!.remainingQuantity.toString()}',
                       style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),

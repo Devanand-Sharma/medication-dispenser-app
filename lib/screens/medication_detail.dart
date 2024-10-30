@@ -49,14 +49,14 @@ class _MedicationDetailScreenState
                 ),
                 const Gap(5),
                 Text(
-                  medication.name,
+                  medication.name!,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(medication.condition,
+              child: Text(medication.condition!,
                   style: Theme.of(context).textTheme.bodyLarge),
             ),
           ],

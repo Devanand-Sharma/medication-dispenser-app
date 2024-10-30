@@ -70,23 +70,23 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
       _name = widget.medication!.name;
       _condition = widget.medication!.condition;
       _medicationRoute = widget.medication!.route;
-      _dose = widget.medication!.dose;
-      _thresholdQuantity = widget.medication!.prescription.thresholdQuantity;
-      _medicationFrequency = widget.medication!.dosage.frequency;
+      _dose = widget.medication!.dose;;
+      _thresholdQuantity = (widget.medication!.prescription != null && widget.medication!.prescription!.thresholdQuantity != null) ? widget.medication!.prescription!.thresholdQuantity! : 0;
+      _medicationFrequency = widget.medication!.dosage?.frequency;
       _medicationFrequencyCount =
           setMedicationFrequencyCount(_medicationFrequency);
       _minMedicationFrequencyCount =
           setMinMedicationFrequencyCount(_medicationFrequency);
       _maxMedicationFrequencyCount =
           setMaxMedicationFrequencyCount(_medicationFrequency);
-      _medicationFrequencyCount = widget.medication!.dosage.frequencyCount;
+      _medicationFrequencyCount = widget.medication!.dosage!.frequencyCount;
       for (int i = 0;
-          i < widget.medication!.dosage.scheduledTimes.length;
+          i < widget.medication!.dosage!.scheduledTimes!.length;
           i++) {
-        _scheduledTimes[i] = widget.medication!.dosage.scheduledTimes[i];
+        _scheduledTimes[i] = widget.medication!.dosage!.scheduledTimes![i];
       }
-      _startDate = widget.medication!.dosage.startDate;
-      _endDate = widget.medication!.dosage.endDate;
+      _startDate = widget.medication!.dosage!.startDate;
+      _endDate = widget.medication!.dosage!.endDate;
       _instructions = widget.medication!.instructions;
     }
   }
@@ -96,21 +96,19 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
     super.didChangeDependencies();
 
     if (widget.medication != null) {
-      _totalQuantityController.text =
-          widget.medication!.prescription.totalQuantity.toString();
-      _remainingQuantityController.text =
-          widget.medication!.prescription.remainingQuantity.toString();
+      _totalQuantityController.text = (widget.medication!.prescription != null && widget.medication!.prescription!.totalQuantity != null) ? widget.medication!.prescription!.totalQuantity!.toString() : "";
+      _remainingQuantityController.text = (widget.medication!.prescription != null && widget.medication!.prescription!.remainingQuantity != null) ? widget.medication!.prescription!.remainingQuantity!.toString() : "";
       for (int i = 0;
-          i < widget.medication!.dosage.scheduledTimes.length;
+          i < widget.medication!.dosage!.scheduledTimes!.length;
           i++) {
         _scheduledTimesControllers[i].text =
-            widget.medication!.dosage.scheduledTimes[i].format(context);
+            widget.medication!.dosage!.scheduledTimes![i].format(context);
       }
-      _startDateController.text =
-          DateFormat('dd-MMM-yyyy').format(widget.medication!.dosage.startDate);
-      if (widget.medication!.dosage.endDate != null) {
+      _startDateController.text = DateFormat('dd-MMM-yyyy')
+          .format(widget.medication!.dosage!.startDate!);
+      if (widget.medication!.dosage!.endDate != null) {
         _endDateController.text = DateFormat('dd-MMM-yyyy')
-            .format(widget.medication!.dosage.endDate!);
+            .format(widget.medication!.dosage!.endDate!);
       }
     }
   }

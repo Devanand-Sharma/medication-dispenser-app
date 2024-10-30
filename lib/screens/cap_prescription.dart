@@ -30,7 +30,7 @@ class CapturePrescriptionScreenState extends State<CapturePrescriptionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Capture Prescription'),
+        title: const Text('Scan Prescription Barcode'),
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),

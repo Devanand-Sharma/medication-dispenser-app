@@ -5,20 +5,20 @@ import 'package:medication_app/models/medication_frequency.dart';
 
 class Dosage {
   Dosage({
-    required this.frequency,
+    this.frequency,
     this.frequencyCount,
-    required this.scheduledTimes,
+    this.scheduledTimes,
     this.administeredTimes = const [],
-    required this.startDate,
+    this.startDate,
     this.endDate,
     this.isReminder = true,
   });
 
-  MedicationFrequency frequency;
+  MedicationFrequency? frequency;
   int? frequencyCount;
-  List<TimeOfDay> scheduledTimes;
+  List<TimeOfDay>? scheduledTimes;
   List<AdministeredTime> administeredTimes;
-  DateTime startDate;
+  DateTime? startDate;
   DateTime? endDate;
   bool isReminder;
 }

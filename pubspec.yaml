@@ -49,6 +49,8 @@ dependencies:
   animated_text_kit: ^4.2.2
   uuid: ^4.5.0
   numberpicker: ^2.1.2
+  google_mlkit_barcode_scanning: ^0.13.0
+  google_mlkit_text_recognition: ^0.14.0
 
 dev_dependencies:
   flutter_test:

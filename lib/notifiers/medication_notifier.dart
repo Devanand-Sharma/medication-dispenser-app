@@ -27,7 +27,7 @@ class MedicationNotifier extends AsyncNotifier<List<Medication>> {
 
   Future<List<Medication>> fetchMedications() async {
     try {
-      final response = await dio.get('http://localhost:8080/api/medications');
+      final response = await dio.get('http://localhost:8080/api/v1/medications');
 
       if (response.statusCode == 200) {
         final medications = (response.data as List)
@@ -49,7 +49,7 @@ class MedicationNotifier extends AsyncNotifier<List<Medication>> {
 
     try {
       final response = await dio.post(
-        'http://localhost:8080/api/medications',
+        'http://localhost:8080/api/v1/medications',
         data: medicationJson,
         options: Options(
           headers: {
@@ -76,7 +76,7 @@ class MedicationNotifier extends AsyncNotifier<List<Medication>> {
 
     try {
       final response = await dio.patch(
-        'http://localhost:8080/api/medications/${medicationData.id}',
+        'http://localhost:8080/api/v1/medications/${medicationData.id}',
         data: medicationJson,
         options: Options(
           headers: {
@@ -104,7 +104,7 @@ class MedicationNotifier extends AsyncNotifier<List<Medication>> {
   Future<void> removeMedication(Medication medication) async {
     try {
       final response = await dio.delete(
-        'http://localhost:8080/api/medications/${medication.id}',
+        'http://localhost:8080/api/v1/medications/${medication.id}',
       );
 
       if (response.statusCode == 200) {

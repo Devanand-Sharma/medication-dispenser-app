@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:medication_app/providers/theme_provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,38 +51,100 @@ void main() async {
   runApp(ProviderScope(child: MyApp(camera: camera)));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key, required this.camera});
 
   final CameraDescription? camera;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
+
+    final lightTheme = ThemeData(
+      brightness: Brightness.light,
+      colorScheme:
+          ColorScheme.fromSeed(seedColor: const Color(0xFF8763C7)).copyWith(
+        // Main Color
+        primary: const Color(0xFF8763C7),
+        onPrimary: Colors.white,
+        // Accent Color
+        secondary: Colors.amber,
+        onSecondary: Colors.black,
+        // Card Color
+        onSurface: Colors.black87,
+        onSurfaceVariant: const Color(0xFF8763C7),
+      ),
+      scaffoldBackgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      elevatedButtonTheme: const ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(
+            Color(0xFF8763C7),
+          ),
+          foregroundColor: WidgetStatePropertyAll(
+            Colors.white,
+          ),
+        ),
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xFF8763C7),
+        foregroundColor: Colors.white,
+        titleTextStyle: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+        ),
+      ),
+    );
+
+    final darkTheme = ThemeData.dark().copyWith(
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple).copyWith(
+        // Main Color
+        primary: const Color(0xFF5A3F82),
+        onPrimary: Colors.white,
+        // Accent Color
+        secondary: Colors.orange,
+        onSecondary: Colors.black,
+        // Card
+        surface: const Color(0xFF282929),
+        onSurface: Colors.white70,
+        onSurfaceVariant: const Color(0xFF8763C7),
+        // Background Color
+        primaryContainer: Colors.black,
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.all(Colors.white),
+          backgroundColor: WidgetStateProperty.all(Colors.transparent),
+          side: WidgetStateProperty.all(
+            const BorderSide(
+              color: Colors.white,
+              width: 1,
+            ),
+          ),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(const Color(0xFF5A3F82)),
+          foregroundColor: WidgetStateProperty.all(Colors.white),
+        ),
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xFF5A3F82),
+        foregroundColor: Colors.white,
+        titleTextStyle: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+        ),
+      ),
+    );
+
     return MaterialApp(
       title: 'Medication Tracker',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Colors.deepPurple).copyWith(
-          secondary: Colors.amberAccent,
-          onSurface: Colors.black87,
-        ),
-        textTheme: TextTheme(
-          bodyLarge: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-          titleLarge: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-          headlineSmall:
-              TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-          headlineMedium:
-              TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-        ),
-        appBarTheme: AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontSize: 20,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-        ),
-        useMaterial3: true,
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: themeMode,
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {

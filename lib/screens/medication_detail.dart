@@ -50,14 +50,20 @@ class _MedicationDetailScreenState
                 const Gap(5),
                 Text(
                   medication.name,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                 ),
               ],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(medication.condition,
-                  style: Theme.of(context).textTheme.bodyLarge),
+              child: Text(
+                medication.condition,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+              ),
             ),
           ],
         ),
@@ -85,6 +91,7 @@ class _MedicationDetailScreenState
               await ref
                   .read(medicationProvider.notifier)
                   .removeMedication(widget.medication);
+              if (!context.mounted) return;
               Navigator.of(context).pop(); // Return to Medication Card
             },
             child: const Text('Delete'),
@@ -98,8 +105,6 @@ class _MedicationDetailScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
             onPressed: () async {

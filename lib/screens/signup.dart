@@ -40,7 +40,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final firstName = _firstNameController.text.trim();
     final lastName = _lastNameController.text.trim();
 
-    if (email.isEmpty || password.isEmpty || firstName.isEmpty || lastName.isEmpty) {
+    if (email.isEmpty ||
+        password.isEmpty ||
+        firstName.isEmpty ||
+        lastName.isEmpty) {
       _showSnackBar('Please fill in all fields', isError: true);
       return;
     }
@@ -66,7 +69,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _showSnackBar('Registration successful');
       Navigator.of(context).pop();
     } catch (e) {
-      if (mounted) _showSnackBar('An error occurred during sign up: $e', isError: true);
+      if (mounted)
+        _showSnackBar('An error occurred during sign up: $e', isError: true);
     }
   }
 
@@ -96,8 +100,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
         title: const Text('Sign Up'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       body: SafeArea(
         child: SingleChildScrollView(

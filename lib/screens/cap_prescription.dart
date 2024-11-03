@@ -11,11 +11,11 @@ class CapturePrescriptionScreen extends StatefulWidget {
   final CameraDescription? camera;
 
   @override
-  CapturePrescriptionScreenState createState() => CapturePrescriptionScreenState();
+  CapturePrescriptionScreenState createState() =>
+      CapturePrescriptionScreenState();
 }
 
 class CapturePrescriptionScreenState extends State<CapturePrescriptionScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -29,12 +29,10 @@ class CapturePrescriptionScreenState extends State<CapturePrescriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Capture Prescription'),
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
-      body: CameraWidget(camera: widget.camera, snapDestination: '/new-medication')
-    );
+        appBar: AppBar(
+          title: const Text('Capture Prescription'),
+        ),
+        body: CameraWidget(
+            camera: widget.camera, snapDestination: '/new-medication'));
   }
 }

@@ -12,11 +12,11 @@ final List<Map<String, dynamic>> pages = [
     'title': 'Home',
   },
   {
-    'page': MedicationScreen(),
+    'page': const MedicationScreen(),
     'title': 'Medication',
   },
   {
-    'page': HistoryScreen(),
+    'page': const HistoryScreen(),
     'title': 'History',
   },
 ];
@@ -25,7 +25,7 @@ class TabsScreen extends StatefulWidget {
   static const String routeName = '/tabs';
   final User user;
 
-  const TabsScreen({Key? key, required this.user}) : super(key: key);
+  const TabsScreen({super.key, required this.user});
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();
@@ -44,11 +44,11 @@ class _TabsScreenState extends State<TabsScreen> {
         'title': 'Home',
       },
       {
-        'page': MedicationScreen(),
+        'page': const MedicationScreen(),
         'title': 'Medication',
       },
       {
-        'page': HistoryScreen(),
+        'page': const HistoryScreen(),
         'title': 'History',
       },
     ];
@@ -74,7 +74,7 @@ class _TabsScreenState extends State<TabsScreen> {
       body: _pages[_selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
-        unselectedItemColor: Colors.white,
+        unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
         selectedItemColor: Theme.of(context).colorScheme.secondary,
         currentIndex: _selectedPageIndex,
         backgroundColor: Theme.of(context).colorScheme.primary,

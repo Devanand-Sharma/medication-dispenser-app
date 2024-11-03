@@ -6,19 +6,32 @@ class HomeMedicationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
           ListTile(
-            leading: const Icon(
+            leading: Icon(
               Icons.medication_rounded,
               size: 40,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            title: const Text('Medication'),
+            title: Text(
+              'Medication',
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+            ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Illness', style: Theme.of(context).textTheme.bodySmall),
-                Text('Frequency', style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  'Illness',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface),
+                ),
+                Text(
+                  'Frequency',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface),
+                ),
               ],
             ),
             trailing: IconButton(
@@ -44,11 +57,6 @@ class HomeMedicationCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    style: ButtonStyle(
-                      foregroundColor: WidgetStateProperty.all(Colors.white),
-                      backgroundColor: WidgetStateProperty.all(
-                          Theme.of(context).colorScheme.primary),
-                    ),
                     onPressed: () {
                       // Add your button 2 logic here
                     },

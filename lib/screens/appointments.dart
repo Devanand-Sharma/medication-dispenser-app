@@ -9,8 +9,6 @@ class AppointmentsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Appointments'),
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

@@ -25,7 +25,9 @@ class MedicationFormScreen extends ConsumerStatefulWidget {
 
 class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextStyle get _textStyle => const TextStyle(color: Colors.black);
+  bool? isDarkMode;
+  TextStyle? _textStyle;
+  TextStyle? _labelStyle;
 
   String? _name;
   String? _condition;
@@ -92,6 +94,16 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    _textStyle = TextStyle(
+      color: isDarkMode! ? Colors.white : Colors.black,
+    );
+
+    _labelStyle = TextStyle(
+      color: isDarkMode! ? Colors.white70 : Colors.black54,
+    );
 
     if (widget.medication != null) {
       _totalQuantityController.text =
@@ -241,6 +253,28 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
+      builder: (context, child) {
+        return Theme(
+          data: isDarkMode!
+              ? ThemeData.dark().copyWith(
+                  colorScheme: ColorScheme.dark(
+                    primary: Theme.of(context).colorScheme.inversePrimary,
+                    onPrimary: Colors.white,
+                    surface: Colors.grey[800]!,
+                    onSurface: Colors.white,
+                  ),
+                  dialogBackgroundColor: Colors.grey[900],
+                  textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                      foregroundColor:
+                          Theme.of(context).colorScheme.inversePrimary,
+                    ),
+                  ),
+                )
+              : ThemeData.light(),
+          child: child!,
+        );
+      },
     );
     if (picked != null) {
       setState(() {
@@ -256,6 +290,28 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
+      builder: (context, child) {
+        return Theme(
+          data: isDarkMode!
+              ? ThemeData.dark().copyWith(
+                  colorScheme: ColorScheme.dark(
+                    primary: Theme.of(context).colorScheme.inversePrimary,
+                    onPrimary: Colors.white,
+                    surface: Colors.grey[800]!,
+                    onSurface: Colors.white,
+                  ),
+                  dialogBackgroundColor: Colors.grey[900],
+                  textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                      foregroundColor:
+                          Theme.of(context).colorScheme.inversePrimary,
+                    ),
+                  ),
+                )
+              : ThemeData.light(),
+          child: child!,
+        );
+      },
     );
     if (picked != null) {
       setState(() {
@@ -280,6 +336,7 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
   InputDecoration _buildTextFormFieldLabel(String label) {
     return InputDecoration(
       labelText: label,
+      labelStyle: _labelStyle,
       border: const OutlineInputBorder(),
     );
   }
@@ -289,8 +346,6 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.isEditing ? 'Update Medication' : 'Add Medication'),
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Form(
         key: _formKey,
@@ -300,10 +355,10 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               TextFormField(
+                decoration: _buildTextFormFieldLabel('Medication Name'),
                 initialValue: _name,
                 onChanged: (value) => setState(() => _name = value),
                 onSaved: (value) => _name = value,
-                decoration: _buildTextFormFieldLabel('Medication Name'),
                 style: _textStyle,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -318,7 +373,7 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
                 onChanged: (value) => setState(() => _name = value),
                 onSaved: (value) => _condition = value,
                 decoration: _buildTextFormFieldLabel('Condition'),
-                style: const TextStyle(color: Colors.black),
+                style: _textStyle,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a medication condition';
@@ -578,6 +633,7 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
                       onTap: () => _selectEndDate(context),
                       decoration: InputDecoration(
                         labelText: 'End Date (Optional)',
+                        labelStyle: _labelStyle,
                         suffixIcon: _endDate != null
                             ? IconButton(
                                 icon: const Icon(Icons.clear),
@@ -607,11 +663,6 @@ class MedicationFormScreenState extends ConsumerState<MedicationFormScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: submitForm,
-                  style: ButtonStyle(
-                    foregroundColor: WidgetStateProperty.all(Colors.white),
-                    backgroundColor: WidgetStateProperty.all(
-                        Theme.of(context).colorScheme.primary),
-                  ),
                   child: Text(widget.isEditing
                       ? 'Update Medication'
                       : 'Add Medication'),

@@ -37,6 +37,7 @@ class MoreDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
           DrawerHeader(
@@ -55,7 +56,7 @@ class MoreDrawer extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 30,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
                   child: Icon(
                     Icons.person,
                     size: 40,
@@ -69,37 +70,51 @@ class MoreDrawer extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       user.displayName ?? 'User',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style:
+                          Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          Expanded(
-            child: ListView(
-              children: [
-                ...drawerList.map(
-                  (item) => ListTile(
-                    leading: Icon(item['icon'] as IconData),
-                    title: Text(item['title'] as String),
-                    onTap: () {
-                      Scaffold.of(context).closeDrawer();
-                      Navigator.of(context).pushNamed(item['route']);
-                    },
-                  ),
+          ...drawerList.map(
+            (item) => ListTile(
+              leading: Icon(
+                item['icon'] as IconData,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              title: Text(
+                item['title'] as String,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
-                const Divider(),
-                ListTile(
-                  leading: const Icon(Icons.logout),
-                  title: const Text('Logout'),
-                  onTap: () async {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.of(context).pushReplacementNamed('/login');
-                  },
-                ),
-              ],
+              ),
+              onTap: () {
+                Scaffold.of(context).closeDrawer();
+                Navigator.of(context).pushNamed(item['route']);
+              },
             ),
+          ),
+          const Divider(),
+          ListTile(
+            leading: Icon(
+              Icons.logout,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+            title: Text(
+              'Logout',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              if (!context.mounted) return;
+              Navigator.of(context).pushReplacementNamed('/login');
+            },
           ),
         ],
       ),

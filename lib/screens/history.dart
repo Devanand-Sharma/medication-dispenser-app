@@ -26,88 +26,92 @@ class _HistoryScreenState extends State<HistoryScreen> {
               icon: const Icon(Icons.menu),
               onPressed: () => Scaffold.of(context).openDrawer()),
           title: const Text('History'),
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
           actions: [
             IconButton(
               onPressed: () {},
               icon: const Icon(Icons.calendar_month_rounded),
             ),
           ],
-          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
-        body: Column(
-          children: [
-            TableCalendar(
-              calendarStyle: CalendarStyle(
-                todayDecoration: const BoxDecoration(
-                  color: Colors.transparent,
-                  shape: BoxShape.circle,
+        body: Container(
+          color: Theme.of(context).colorScheme.surface,
+          child: Column(
+            children: [
+              TableCalendar(
+                calendarStyle: CalendarStyle(
+                  todayDecoration: const BoxDecoration(
+                    color: Colors.transparent,
+                    shape: BoxShape.circle,
+                  ),
+                  selectedDecoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    shape: BoxShape.circle,
+                  ),
+                  outsideTextStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                  selectedTextStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.onSecondary),
+                  todayTextStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.onSurface),
                 ),
-                selectedDecoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  shape: BoxShape.circle,
-                ),
-                outsideTextStyle: const TextStyle(color: Colors.black),
-                selectedTextStyle: const TextStyle(color: Colors.white),
-                todayTextStyle: const TextStyle(color: Colors.black),
-              ),
-              weekendDays: const [],
-              calendarFormat: _calendarFormat,
-              availableCalendarFormats: const {
-                CalendarFormat.week: 'Week',
-              },
-              selectedDayPredicate: (day) {
-                return isSameDay(_selectedDay, day);
-              },
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDay = selectedDay;
+                weekendDays: const [],
+                calendarFormat: _calendarFormat,
+                availableCalendarFormats: const {
+                  CalendarFormat.week: 'Week',
+                },
+                selectedDayPredicate: (day) {
+                  return isSameDay(_selectedDay, day);
+                },
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                    _dayViewKey.currentState?.animateToDate(selectedDay);
+                  });
+                },
+                firstDay: DateTime.utc(2012, 10, 16),
+                lastDay: DateTime.utc(2030, 3, 14),
+                focusedDay: _focusedDay,
+                onPageChanged: (focusedDay) {
                   _focusedDay = focusedDay;
-                  _dayViewKey.currentState?.animateToDate(selectedDay);
-                });
-              },
-              firstDay: DateTime.utc(2012, 10, 16),
-              lastDay: DateTime.utc(2030, 3, 14),
-              focusedDay: _focusedDay,
-              onPageChanged: (focusedDay) {
-                _focusedDay = focusedDay;
-              },
-            ),
-            const Divider(height: 1, thickness: 1),
-            Expanded(
-              child: DayView(
-                key: _dayViewKey,
-                controller: _eventController,
-                eventTileBuilder: (date, events, boundry, start, end) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blue.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      events.first.title,
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  );
-                },
-                showVerticalLine: true,
-                showLiveTimeLineInAllDays: true,
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                minDay: DateTime(2020),
-                maxDay: DateTime(2030),
-                initialDay: _selectedDay,
-                heightPerMinute: 1,
-                eventArranger: const SideEventArranger(),
-                dayTitleBuilder: DayHeader.hidden,
-                onEventTap: (events, date) {
-                  // Add some action to when we tap on events
-                },
-                onDateLongPress: (date) {
-                  // If we want special actions for holding events.
                 },
               ),
-            ),
-          ],
+              const Divider(height: 1, thickness: 1),
+              Expanded(
+                child: DayView(
+                  key: _dayViewKey,
+                  controller: _eventController,
+                  eventTileBuilder: (date, events, boundry, start, end) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        events.first.title,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    );
+                  },
+                  showVerticalLine: true,
+                  showLiveTimeLineInAllDays: true,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  minDay: DateTime(2020),
+                  maxDay: DateTime(2030),
+                  initialDay: _selectedDay,
+                  heightPerMinute: 1,
+                  eventArranger: const SideEventArranger(),
+                  dayTitleBuilder: DayHeader.hidden,
+                  onEventTap: (events, date) {
+                    // Add some action to when we tap on events
+                  },
+                  onDateLongPress: (date) {
+                    // If we want special actions for holding events.
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

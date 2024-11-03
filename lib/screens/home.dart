@@ -7,7 +7,7 @@ import 'package:medication_app/widgets/home_medication_card.dart';
 
 class HomeScreen extends StatelessWidget {
   final User user;
-  const HomeScreen({Key? key, required this.user}) : super(key: key);
+  const HomeScreen({super.key, required this.user});
   static const appBarHeight = 115.0;
   static const appBarSpacing = 5.0;
 
@@ -24,16 +24,24 @@ class HomeScreen extends StatelessWidget {
           children: [
             Text(
               DateFormat('EEEE, MMMM dd, yyyy').format(DateTime.now()),
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
             ),
             const Gap(appBarSpacing),
             Text(
               '4 Medications',
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
             ),
             const Gap(appBarSpacing),
             ElevatedButton(
               onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                foregroundColor: Theme.of(context).colorScheme.onSecondary,
+              ),
               child: const Text('Log All As Taken'),
             )
           ],
@@ -52,8 +60,6 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.menu),
             onPressed: () => Scaffold.of(context).openDrawer()),
         centerTitle: true,
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
             icon: const Icon(Icons.people),
@@ -79,22 +85,20 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Container(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        child: Column(children: [
-          _buildSummaryReport(context),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(5),
-              shrinkWrap: true,
-              itemCount: numbers.length,
-              itemBuilder: (context, index) {
-                return const HomeMedicationCard();
-              },
-            ),
-          )
-        ]),
-      ),
+      // backgroundColor: ThemeData.dark().colorScheme.background,
+      body: Column(children: [
+        _buildSummaryReport(context),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(5),
+            shrinkWrap: true,
+            itemCount: numbers.length,
+            itemBuilder: (context, index) {
+              return const HomeMedicationCard();
+            },
+          ),
+        )
+      ]),
     );
   }
 }

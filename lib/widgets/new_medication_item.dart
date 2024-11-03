@@ -23,14 +23,14 @@ class NewMedicationItem extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
             const Gap(10),
             Text(
               label,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.w500),
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
             ),
           ],
         ),

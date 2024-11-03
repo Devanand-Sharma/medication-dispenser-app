@@ -28,11 +28,8 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
         title: const Text('Reports'),
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Column(
         children: [
@@ -70,12 +67,6 @@ class _ReportScreenState extends State<ReportScreen> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {},
-              style: ButtonStyle(
-                foregroundColor: WidgetStateProperty.all(
-                    Theme.of(context).colorScheme.onPrimary),
-                backgroundColor: WidgetStateProperty.all(
-                    Theme.of(context).colorScheme.primary),
-              ),
               child: const Text('Export'),
             ),
           ),

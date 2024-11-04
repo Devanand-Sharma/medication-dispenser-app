@@ -27,6 +27,7 @@ void main() async {
     Firebase.app();
   } catch (e) {
     await Firebase.initializeApp(
+      name: 'medication-dispenser-firebase',
       options: DefaultFirebaseOptions.currentPlatform,
     );
   }
@@ -50,10 +51,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({
-    super.key,
-    required this.camera
-  });
+  const MyApp({super.key, required this.camera});
 
   final CameraDescription? camera;
 
@@ -71,8 +69,10 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyLarge: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
           titleLarge: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-          headlineSmall: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-          headlineMedium: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+          headlineSmall:
+              TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+          headlineMedium:
+              TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
         appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(
@@ -99,7 +99,8 @@ class MyApp extends StatelessWidget {
         SignUpScreen.routeName: (context) => const SignUpScreen(),
         AppointmentsScreen.routeName: (context) => const AppointmentsScreen(),
         DoctorsScreen.routeName: (context) => const DoctorsScreen(),
-        CapturePrescriptionScreen.routeName: (context) => CapturePrescriptionScreen(camera: camera),
+        CapturePrescriptionScreen.routeName: (context) =>
+            CapturePrescriptionScreen(camera: camera),
         RefillsScreen.routeName: (context) => const RefillsScreen(),
         ReportScreen.routeName: (context) => const ReportScreen(),
         SettingsScreen.routeName: (context) => const SettingsScreen(),

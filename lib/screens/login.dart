@@ -3,6 +3,8 @@ import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:medication_app/screens/tabs.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login';
@@ -15,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final String _apiUrl = dotenv.env['API_URL'] ?? 'http://localhost:8080';
 
   Future<void> _handleGoogleSignIn() async {
     try {
@@ -43,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (user != null) {
         print('Signed in successfully as ${user.displayName}');
         print('User UUID: ${user.uid}');
+        await _syncUserWithBackend(user);
         _showSnackBar('Signed in successfully as ${user.displayName}');
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -56,6 +60,22 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (error) {
       print('Error during Google sign in: $error');
       _showSnackBar('Failed to sign in with Google: $error', isError: true);
+    }
+  }
+
+  Future<void> _syncUserWithBackend(User firebaseUser) async {
+    try {
+      final dio = Dio();
+      await dio.post(
+        '$_apiUrl/api/users/sync',
+        data: {
+          'id': firebaseUser.uid,
+          'name': firebaseUser.displayName,
+          'email': firebaseUser.email,
+        },
+      );
+    } catch (error) {
+      print('Error syncing user with backend: $error');
     }
   }
 

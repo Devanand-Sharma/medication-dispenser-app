@@ -51,8 +51,8 @@ class _MedicationDetailScreenState
                 Text(
                   medication.name,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                 ),
               ],
             ),
@@ -61,10 +61,10 @@ class _MedicationDetailScreenState
               child: Text(
                 medication.condition,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),

@@ -29,10 +29,12 @@ class CapturePrescriptionScreenState extends State<CapturePrescriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Capture Prescription'),
-        ),
-        body: CameraWidget(
-            camera: widget.camera, snapDestination: '/new-medication'));
+      appBar: AppBar(
+        title: const Text('Scan Prescription Barcode'),
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+      ),
+      body: CameraWidget(camera: widget.camera, snapDestination: '/new-medication')
+    );
   }
 }
